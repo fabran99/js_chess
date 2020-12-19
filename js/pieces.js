@@ -97,8 +97,38 @@ class BasePiece {
     this.element.remove();
   }
 
+  getMovements() {
+    return [];
+  }
+
   checkMoves(e) {
-    console.log("moves");
+    let pieceSquare = getSquareByPosition(this.row, this.column);
+    if (this.board.turn == this.team) {
+      // Quito la clase selected a todas las piezas y se la agrego a la pieza actual
+      normalizeSquares();
+      pieceSquare.className = "square square--selected_piece";
+
+      // ==================================================
+      // Reviso que movimientos tengo disponibles
+      // ==================================================
+      var movements = this.getMovements();
+
+      // Asigno funcion a cada movimiento posible
+      movements.forEach((movement) => {
+        let square = getSquareByPosition(movement.row, movement.column);
+        square.className = "square square--posible_movement";
+        square.onclick = (e) => {
+          this.updatePosition(movement.row, movement.column);
+          normalizeSquares();
+          this.board.setNextTurn();
+        };
+      });
+    } else {
+      // Reviso si clickee en una pieza matable
+      if (pieceSquare.classList.contains("square--posible_movement")) {
+        pieceSquare.onclick();
+      }
+    }
   }
 
   updatePosition(newRow, newColumn) {
@@ -237,35 +267,5 @@ class Pawn extends BasePiece {
     }
 
     return movements;
-  }
-
-  checkMoves(e) {
-    let pieceSquare = getSquareByPosition(this.row, this.column);
-    if (this.board.turn == this.team) {
-      // Quito la clase selected a todas las piezas y se la agrego a la pieza actual
-      normalizeSquares();
-      pieceSquare.className = "square square--selected_piece";
-
-      // ==================================================
-      // Reviso que movimientos tengo disponibles
-      // ==================================================
-      var movements = this.getMovements();
-
-      // Asigno funcion a cada movimiento posible
-      movements.forEach((movement) => {
-        let square = getSquareByPosition(movement.row, movement.column);
-        square.className = "square square--posible_movement";
-        square.onclick = (e) => {
-          this.updatePosition(movement.row, movement.column);
-          normalizeSquares();
-          this.board.setNextTurn();
-        };
-      });
-    } else {
-      // Reviso si clickee en una pieza matable
-      if (pieceSquare.classList.contains("square--posible_movement")) {
-        pieceSquare.onclick();
-      }
-    }
   }
 }
