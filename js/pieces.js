@@ -115,6 +115,10 @@ class BasePiece {
     }
     this.element.className = `piece piece--${this.column} piece--${this.row} piece--${this.team}`;
   }
+
+  isEnemyPiece(piece) {
+    return piece.team != this.team;
+  }
 }
 
 class Pawn extends BasePiece {
@@ -149,14 +153,13 @@ class Pawn extends BasePiece {
       }
 
       // Reviso si puedo comer una pieza del rival
-
       let pieceExistsDiagonalRight = this.board.getPieceAt(
         this.row + 1,
         moveColumn(this.column, 1)
       );
       if (
         pieceExistsDiagonalRight &&
-        pieceExistsDiagonalRight.team != this.team
+        this.isEnemyPiece(pieceExistsDiagonalRight)
       ) {
         movements.push({
           column: moveColumn(this.column, 1),
@@ -167,10 +170,7 @@ class Pawn extends BasePiece {
         this.row + 1,
         moveColumn(this.column, -1)
       );
-      if (
-        pieceExistsDiagonalLeft &&
-        pieceExistsDiagonalLeft.team != this.team
-      ) {
+      if (pieceExistsDiagonalLeft && isEnemyPiece(pieceExistsDiagonalLeft)) {
         movements.push({
           column: moveColumn(this.column, -1),
           row: this.row + 1,

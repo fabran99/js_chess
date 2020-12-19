@@ -17,6 +17,7 @@ class Board {
   }
 
   initBoard() {
+    // Cuadros
     for (let i = 0; i < 8; i++) {
       let row = document.createElement("div");
       row.className = "row";
