@@ -170,7 +170,10 @@ class Pawn extends BasePiece {
         this.row + 1,
         moveColumn(this.column, -1)
       );
-      if (pieceExistsDiagonalLeft && isEnemyPiece(pieceExistsDiagonalLeft)) {
+      if (
+        pieceExistsDiagonalLeft &&
+        this.isEnemyPiece(pieceExistsDiagonalLeft)
+      ) {
         movements.push({
           column: moveColumn(this.column, -1),
           row: this.row + 1,
@@ -211,7 +214,7 @@ class Pawn extends BasePiece {
       );
       if (
         pieceExistsDiagonalRight &&
-        pieceExistsDiagonalRight.team != this.team
+        this.isEnemyPiece(pieceExistsDiagonalRight)
       ) {
         movements.push({
           column: moveColumn(this.column, 1),
@@ -224,7 +227,7 @@ class Pawn extends BasePiece {
       );
       if (
         pieceExistsDiagonalLeft &&
-        pieceExistsDiagonalLeft.team != this.team
+        this.isEnemyPiece(pieceExistsDiagonalLeft.team)
       ) {
         movements.push({
           column: moveColumn(this.column, -1),
