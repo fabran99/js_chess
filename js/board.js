@@ -1,6 +1,7 @@
 class Board {
   constructor() {
     this.boardContainer = getEl("board");
+    this.rowContainer = getEl("row_container");
     this.pieceContainer = getEl("pieces");
 
     this.gameOver = false;
@@ -11,8 +12,21 @@ class Board {
     this.blackOnCheck = false;
 
     this.pieces = [];
-
+    this.initBoard();
     this.resetGame();
+  }
+
+  initBoard() {
+    for (let i = 0; i < 8; i++) {
+      let row = document.createElement("div");
+      row.className = "row";
+      this.rowContainer.appendChild(row);
+      for (let j = 0; j < 8; j++) {
+        let square = document.createElement("div");
+        square.className = "square";
+        row.appendChild(square);
+      }
+    }
   }
 
   getPieceAt(row, column) {
