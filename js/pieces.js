@@ -268,4 +268,14 @@ class Pawn extends BasePiece {
 
     return movements;
   }
+
+  updatePosition(newRow, newColumn) {
+    if (this.team == "white" && newRow == 8) {
+      console.log("corono");
+    } else if (this.team == "black" && newRow == 1) {
+      console.log("corono");
+    }
+
+    super.updatePosition(newRow, newColumn);
+  }
 }
